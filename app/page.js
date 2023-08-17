@@ -1,95 +1,122 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import React, { useState } from "react";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
+import variables from "./variables.module.scss";
+import Link from "next/link";
 
 export default function Home() {
+  const [markdown, setMarkdown] = useState("# Markdown preview");
+
+  const [isBigSize, setIsBigSize] = useState(false);
+
+  const [activeButton, setActiveButton] = useState(null);
+
+  const handleButtonClick = (buttonIndex) => {
+    setActiveButton(buttonIndex === activeButton ? null : buttonIndex);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className={variables.main}>
+      <section className={variables.markdown}>
+        {/* SECTION 1 */}
+
+        <div
+          className={variables.editorWrap}
+          style={
+            activeButton === 2 ? { display: "none" } : { display: "block" }
+          }>
+          <div className={variables.toolbar}>
+            Editor
+            <svg
+              style={
+                activeButton === 1 ? { display: "block" } : { display: "none" }
+              }
+              onClick={() => handleButtonClick(1)}
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16">
+              <path
+                fill-rule="evenodd"
+                d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"
+              />
+            </svg>
+            <svg
+              style={
+                activeButton === 1 ? { display: "none" } : { display: "block" }
+              }
+              onClick={() => handleButtonClick(1)}
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16">
+              <path
+                fill-rule="evenodd"
+                d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zM15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707z"
+              />
+            </svg>
+          </div>
+          <textarea
+            style={
+              activeButton === 1 ? { height: "100vh" } : { height: "auto" }
+            }
+            id="editor"
+            className={variables.editor}
+            value={markdown}
+            onChange={(e) => setMarkdown(e.target.value)}></textarea>
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        {/* SECTION 2 */}
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+        <div
+          className={variables.previewWrap}
+          style={
+            activeButton === 1 ? { display: "none" } : { display: "block" }
+          }>
+          <div className={variables.toolbar}>
+            Editor
+            <svg
+              style={
+                activeButton === 2 ? { display: "block" } : { display: "none" }
+              }
+              onClick={() => handleButtonClick(2)}
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-arrows-angle-expand"
+              viewBox="0 0 16 16">
+              <path
+                fill-rule="evenodd"
+                d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"
+              />
+            </svg>
+            <svg
+              style={
+                activeButton === 2 ? { display: "none" } : { display: "block" }
+              }
+              onClick={() => handleButtonClick(2)}
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-arrows-angle-contract"
+              viewBox="0 0 16 16">
+              <path
+                fill-rule="evenodd"
+                d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707zM15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707z"
+              />
+            </svg>
+          </div>
+          <article id="preview" className={variables.preview}>
+            <ReactMarkdown className={variables.preview}>
+              {markdown}
+            </ReactMarkdown>
+          </article>
+        </div>
+      </section>
     </main>
-  )
+  );
 }
